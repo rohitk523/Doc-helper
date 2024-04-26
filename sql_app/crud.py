@@ -24,13 +24,20 @@ def create_user(db: Session, user: schemas.UserCreate):
     return db_user
 
 
-def get_items(db: Session, skip: int = 0, limit: int = 100):
-    return db.query(models.Item).offset(skip).limit(limit).all()
+def get_docs(db: Session, skip: int = 0, limit: int = 100):
+    return db.query(models.Doc).offset(skip).limit(limit).all()
 
 
-def create_user_item(db: Session, item: schemas.ItemCreate, user_id: int):
-    db_item = models.Item(**item.dict(), owner_id=user_id)
-    db.add(db_item)
+def create_user_doc(db: Session, doc: schemas.DocCreate, user_id: int):
+    db_doc = models.Doc(**doc.dict(), owner_id=user_id)
+    db.add(db_doc)
     db.commit()
-    db.refresh(db_item)
-    return db_item
+    db.refresh(db_doc)
+    return db_doc
+
+def create_visit(db: Session, visit: schemas.VisitCreate):
+    db_visit = models.Visit(**visit.dict())
+    db.add(db_visit)
+    db.commit()
+    db.refresh(db_visit)
+    return db_visit

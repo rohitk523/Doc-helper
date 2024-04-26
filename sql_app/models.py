@@ -12,15 +12,28 @@ class User(Base):
     hashed_password = Column(String)
     is_active = Column(Boolean, default=True)
 
-    items = relationship("Item", back_populates="owner")
+    docs = relationship("Doc", back_populates="owner")
+    visits = relationship("Visit", back_populates="user")
 
 
-class Item(Base):
-    __tablename__ = "items"
+class Doc(Base):
+    __tablename__ = "docs"
 
     id = Column(Integer, primary_key=True)
     title = Column(String, index=True)
     description = Column(String, index=True)
     owner_id = Column(Integer, ForeignKey("users.id"))
 
-    owner = relationship("User", back_populates="items")
+    owner = relationship("User", back_populates="docs")
+    visits = relationship("Visit", back_populates="doc")
+
+
+class Visit(Base):
+    __tablename__ = "visits"
+
+    id = Column(Integer, primary_key=True)
+    user_id = Column(Integer, ForeignKey("users.id"))
+    doc_id = Column(Integer, ForeignKey("docs.id"))
+
+    user = relationship("User", back_populates="visits")
+    doc = relationship("Doc", back_populates="visits")

@@ -1,16 +1,16 @@
 from pydantic import BaseModel
 
 
-class ItemBase(BaseModel):
+class DocBase(BaseModel):
     title: str
     description: str | None = None
 
 
-class ItemCreate(ItemBase):
+class DocCreate(DocBase):
     pass
 
 
-class Item(ItemBase):
+class Doc(DocBase):
     id: int
     owner_id: int
 
@@ -29,7 +29,22 @@ class UserCreate(UserBase):
 class User(UserBase):
     id: int
     is_active: bool
-    items: list[Item] = []
+    docs: list[Doc] = []
+
+    class Config:
+        orm_mode = True
+
+class VisitBase(BaseModel):
+    user_id: int
+    doc_id: int
+
+
+class VisitCreate(VisitBase):
+    pass
+
+
+class Visit(VisitBase):
+    id: int
 
     class Config:
         orm_mode = True
