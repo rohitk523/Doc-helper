@@ -11,15 +11,15 @@ class DocCreate(DocBase):
 
 
 class Doc(DocBase):
-    id: int
-    owner_id: int
+    doc_id: str
+    owner_id: str
 
     class Config:
         orm_mode = True
 
 
 class UserBase(BaseModel):
-    email: str
+    name: str
 
 
 class UserCreate(UserBase):
@@ -27,15 +27,15 @@ class UserCreate(UserBase):
 
 
 class User(UserBase):
-    id: int
+    user_id: str
     docs: list[Doc] = []
 
     class Config:
         orm_mode = True
 
 class VisitBase(BaseModel):
-    user_id: int
-    doc_id: int
+    user_id: str
+    doc_id: str
 
 
 class VisitCreate(VisitBase):
@@ -43,7 +43,7 @@ class VisitCreate(VisitBase):
 
 
 class Visit(VisitBase):
-    id: int
+    visit_id: str
 
     class Config:
         orm_mode = True

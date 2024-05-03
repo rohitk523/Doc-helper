@@ -1,14 +1,14 @@
 from sqlalchemy import Boolean, Column, ForeignKey, Integer, String
 from sqlalchemy.orm import relationship
-
+import uuid
 from .database import Base
 
 
 class User(Base):
     __tablename__ = "users"
 
-    id = Column(Integer, primary_key=True)
-    email = Column(String, unique=True, index=True)
+    user_id = Column(String, primary_key=True, default=str(uuid.uuid4()))
+    name = Column(String, unique=True, index=True)
     hashed_password = Column(String)
 
     docs = relationship("Doc", back_populates="owner")
@@ -18,10 +18,10 @@ class User(Base):
 class Doc(Base):
     __tablename__ = "docs"
 
-    id = Column(Integer, primary_key=True)
+    doc_id = Column(String, primary_key=True, default=str(uuid.uuid4()))
     title = Column(String, index=True)
     description = Column(String, index=True)
-    owner_id = Column(Integer, ForeignKey("users.id"))
+    owner_id = Column(String, ForeignKey("users.user_id"))
 
     owner = relationship("User", back_populates="docs")
     visits = relationship("Visit", back_populates="doc")
@@ -30,9 +30,9 @@ class Doc(Base):
 class Visit(Base):
     __tablename__ = "visits"
 
-    id = Column(Integer, primary_key=True)
-    user_id = Column(Integer, ForeignKey("users.id"))
-    doc_id = Column(Integer, ForeignKey("docs.id"))
+    visit_id = Column(String, primary_key=True, default=str(uuid.uuid4()))
+    user_id = Column(String, ForeignKey("users.user_id"))
+    doc_id = Column(String, ForeignKey("docs.doc_id"))
 
     user = relationship("User", back_populates="visits")
     doc = relationship("Doc", back_populates="visits")

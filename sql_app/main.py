@@ -27,13 +27,13 @@ def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
 
 
 @app.get("/users/", response_model=list[schemas.User])
-def read_users(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
-    users = crud.get_users(db, skip=skip, limit=limit)
+def read_users(db: Session = Depends(get_db)):
+    users = crud.get_users(db)
     return users
 
 
 @app.get("/users/{user_id}", response_model=schemas.User)
-def read_user(user_id: int, db: Session = Depends(get_db)):
+def read_user(user_id: str, db: Session = Depends(get_db)):
     db_user = crud.get_user(db, user_id=user_id)
     if db_user is None:
         raise HTTPException(status_code=404, detail="User not found")
@@ -42,14 +42,14 @@ def read_user(user_id: int, db: Session = Depends(get_db)):
 
 @app.post("/users/{user_id}/docs/", response_model=schemas.Doc)
 def create_doc_for_user(
-    user_id: int, doc: schemas.DocCreate, db: Session = Depends(get_db)
+    user_id: str, doc: schemas.DocCreate, db: Session = Depends(get_db)
 ):
     return crud.create_user_doc(db=db, doc=doc, user_id=user_id)
 
 
 @app.get("/docs/", response_model=list[schemas.Doc])
-def read_docs(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
-    docs = crud.get_docs(db, skip=skip, limit=limit)
+def read_docs(db: Session = Depends(get_db)):
+    docs = crud.get_docs(db)
     return docs
 
 @app.post("/visits/", response_model=schemas.Visit)
