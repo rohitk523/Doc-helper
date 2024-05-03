@@ -28,7 +28,6 @@ class UserCreate(UserBase):
 
 class User(UserBase):
     id: int
-    is_active: bool
     docs: list[Doc] = []
 
     class Config:
