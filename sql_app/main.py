@@ -47,10 +47,11 @@ def create_doc_for_user(
     return crud.create_user_doc(db=db, doc=doc)
 
 
-@app.get("/docs/", response_model=list[schemas.Doc])
-def read_docs(db: Session = Depends(get_db)):
-    docs = crud.get_docs(db)
-    return docs
+@app.get("/records/", response_model=list[schemas.Visit])
+def read_records(db: Session = Depends(get_db)):
+    records = crud.get_records(db)
+    return records
+
 
 @app.post("/visits/", response_model=schemas.Visit)
 def create_visit(visit: schemas.VisitCreate, db: Session = Depends(get_db)):

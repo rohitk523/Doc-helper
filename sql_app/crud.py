@@ -11,8 +11,8 @@ def get_user_by_name(db: Session, name: str):
     return db.query(models.User).filter(models.User.name == name).first()
 
 
-def get_users(db: Session, skip: str = 0):
-    return db.query(models.User).offset(skip).limit(limit).all()
+def get_users(db: Session):
+    return db.query(models.User).all()
 
 
 def create_user(db: Session, user: schemas.UserCreate):
@@ -24,8 +24,8 @@ def create_user(db: Session, user: schemas.UserCreate):
     return db_user
 
 
-def get_records(db: Session, skip: str = 0):
-    return db.query(models.Visit).offset(skip).limit(limit).all()
+def get_records(db: Session):
+    return db.query(models.Visit).all()
 
 
 def create_user_doc(db: Session, doc: schemas.DocCreate):
