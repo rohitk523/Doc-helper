@@ -24,12 +24,12 @@ def create_user(db: Session, user: schemas.UserCreate):
     return db_user
 
 
-def get_docs(db: Session, skip: str = 0):
-    return db.query(models.Doc).offset(skip).limit(limit).all()
+def get_records(db: Session, skip: str = 0):
+    return db.query(models.Visit).offset(skip).limit(limit).all()
 
 
-def create_user_doc(db: Session, doc: schemas.DocCreate, user_id: str):
-    db_doc = models.Doc(**doc.dict(), owner_id=user_id)
+def create_user_doc(db: Session, doc: schemas.DocCreate):
+    db_doc = models.Doc(**doc.dict())
     db.add(db_doc)
     db.commit()
     db.refresh(db_doc)

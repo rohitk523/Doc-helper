@@ -11,7 +11,6 @@ class User(Base):
     name = Column(String, unique=True, index=True)
     hashed_password = Column(String)
 
-    docs = relationship("Doc", back_populates="owner")
     visits = relationship("Visit", back_populates="user")
 
 
@@ -19,11 +18,9 @@ class Doc(Base):
     __tablename__ = "docs"
 
     doc_id = Column(String, primary_key=True, default=str(uuid.uuid4()))
-    title = Column(String, index=True)
-    description = Column(String, index=True)
-    owner_id = Column(String, ForeignKey("users.user_id"))
+    name = Column(String, index=True)
+    speciality = Column(String, index=True)
 
-    owner = relationship("User", back_populates="docs")
     visits = relationship("Visit", back_populates="doc")
 
 

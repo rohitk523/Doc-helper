@@ -40,11 +40,11 @@ def read_user(user_id: str, db: Session = Depends(get_db)):
     return db_user
 
 
-@app.post("/users/{user_id}/docs/", response_model=schemas.Doc)
+@app.post("/docs", response_model=schemas.Doc)
 def create_doc_for_user(
-    user_id: str, doc: schemas.DocCreate, db: Session = Depends(get_db)
+    doc: schemas.DocCreate, db: Session = Depends(get_db)
 ):
-    return crud.create_user_doc(db=db, doc=doc, user_id=user_id)
+    return crud.create_user_doc(db=db, doc=doc)
 
 
 @app.get("/docs/", response_model=list[schemas.Doc])
