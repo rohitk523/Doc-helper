@@ -30,6 +30,8 @@ class Visit(Base):
     visit_id = Column(String, primary_key=True, default=str(uuid.uuid4()))
     user_id = Column(String, ForeignKey("users.user_id"))
     doc_id = Column(String, ForeignKey("docs.doc_id"))
+    symptoms = Column(String, index=True)
+    disease = Column(String, index=True)
 
     user = relationship("User", back_populates="visits")
     doc = relationship("Doc", back_populates="visits")

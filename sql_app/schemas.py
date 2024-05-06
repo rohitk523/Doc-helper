@@ -20,7 +20,8 @@ class Doc(DocBase):
 class VisitBase(BaseModel):
     user_id: str
     doc_id: str
-
+    symptoms: str
+    disease: str
 
 class VisitCreate(VisitBase):
     pass
