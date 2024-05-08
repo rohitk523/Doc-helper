@@ -14,6 +14,14 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 
 
 # Define route for homepage
+@app.get("/")
+async def read_root():
+    # Read the HTML file and return it
+    with open("templates/home.html", "r") as file:
+        html_content = file.read()
+    return HTMLResponse(content=html_content, status_code=200)
+
+
 @app.get("/user")
 async def read_root():
     # Read the HTML file and return it
