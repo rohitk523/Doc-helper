@@ -1,25 +1,33 @@
 from fastapi import Depends, FastAPI, HTTPException
 from fastapi.responses import HTMLResponse
 from sqlalchemy.orm import Session
-
+from fastapi.middleware.cors import CORSMiddleware
 from . import crud, models, schemas
 from .database import SessionLocal, engine
 from starlette.staticfiles import StaticFiles
 
 models.Base.metadata.create_all(bind=engine)
 
+
 app = FastAPI()
 
-app.mount("/static", StaticFiles(directory="static"), name="static")
+
+
+origins = ["*"]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 # Define route for homepage
 @app.get("/")
 async def read_root():
-    # Read the HTML file and return it
-    with open("templates/home.html", "r") as file:
-        html_content = file.read()
-    return HTMLResponse(content=html_content, status_code=200)
+    return "I have done it"
 
 
 @app.get("/user")
@@ -52,7 +60,12 @@ def get_db():
         db.close()
 
 
-@app.post("/users/", response_model=schemas.User)
+@app.post('/dummy')
+def dummy(name, password):
+    return {"name": name, "password": password}
+
+
+@app.post("/create_users/", response_model=schemas.User)
 def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
     db_user = crud.get_user_by_name(db, name=user.name)
     if db_user:
