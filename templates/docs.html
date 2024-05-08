@@ -3,35 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add User</title>
+    <title>Add Doctor</title>
 </head>
 <body>
 
-    <h1>Add User</h1>
-    <form id="user-form">
+    <h1>Add Doctor</h1>
+    <form id="doctor-form">
         <label for="name">Name:</label>
         <input type="text" id="name" name="name" required><br><br>
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required><br><br>
+        <label for="speciality">Speciality:</label>
+        <input type="text" id="speciality" name="speciality" required><br><br>
         <input type="submit" value="Submit">
     </form>
 
     <script>
-        document.getElementById("user-form").addEventListener("submit", function(event) {
+        document.getElementById("doctor-form").addEventListener("submit", function(event) {
             event.preventDefault();
             
             const formData = new FormData(event.target);
-            const userData = {};
+            const doctorData = {};
             formData.forEach((value, key) => {
-                userData[key] = value;
+                doctorData[key] = value;
             });
 
-            fetch('/users/', {
+            fetch('/docs/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(userData),
+                body: JSON.stringify(doctorData),
             })
             .then(response => response.json())
             .then(data => console.log(data))
@@ -39,8 +39,7 @@
         });
     </script>
 
-    <!-- Other forms for doctors and visits -->
+    <!-- Other forms for users and visits -->
 
 </body>
 </html>
-

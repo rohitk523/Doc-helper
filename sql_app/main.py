@@ -14,13 +14,26 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 
 
 # Define route for homepage
-@app.get("/")
+@app.get("/user")
 async def read_root():
     # Read the HTML file and return it
-    with open("templates/home.html", "r") as file:
+    with open("templates/user.html", "r") as file:
         html_content = file.read()
     return HTMLResponse(content=html_content, status_code=200)
 
+
+@app.get("/doc")
+async def read_docs():
+    with open("templates/docs.html", "r") as file:
+        html_content = file.read()
+    return HTMLResponse(content=html_content, status_code=200)
+
+
+@app.get("/visits")
+async def read_visits():
+    with open("templates/visits.html", "r") as file:
+        html_content = file.read()
+    return HTMLResponse(content=html_content, status_code=200)
 
 # Dependency
 def get_db():

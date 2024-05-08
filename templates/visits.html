@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Visit</title>
+</head>
+<body>
+
+    <h1>Add Visit</h1>
+    <form id="visit-form">
+        <label for="user_id">User ID:</label>
+        <input type="text" id="user_id" name="user_id" required><br><br>
+        <label for="doc_id">Doctor ID:</label>
+        <input type="text" id="doc_id" name="doc_id" required><br><br>
+        <label for="symptoms">Symptoms:</label>
+        <input type="text" id="symptoms" name="symptoms" required><br><br>
+        <label for="disease">Disease:</label>
+        <input type="text" id="disease" name="disease" required><br><br>
+        <input type="submit" value="Submit">
+    </form>
+
+    <script>
+        document.getElementById("visit-form").addEventListener("submit", function(event) {
+            event.preventDefault();
+            
+            const formData = new FormData(event.target);
+            const visitData = {};
+            formData.forEach((value, key) => {
+                visitData[key] = value;
+            });
+
+            fetch('/visits/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(visitData),
+            })
+            .then(response => response.json())
+            .then(data => console.log(data))
+            .catch(error => console.error('Error:', error));
+        });
+    </script>
+
+    <!-- Other forms for users and doctors -->
+
+</body>
+</html>
