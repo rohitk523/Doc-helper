@@ -87,7 +87,7 @@ def read_user(user_id: str, db: Session = Depends(get_db)):
     return db_user
 
 
-@app.post("/docs", response_model=schemas.Doc)
+@app.post("/create_docs", response_model=schemas.Doc)
 def create_doc_for_user(
     doc: schemas.DocCreate, db: Session = Depends(get_db)
 ):
@@ -100,7 +100,7 @@ def read_records(db: Session = Depends(get_db)):
     return records
 
 
-@app.post("/visits/", response_model=schemas.Visit)
+@app.post("/create_visits", response_model=schemas.Visit)
 def create_visit(visit: schemas.VisitCreate, db: Session = Depends(get_db)):
     db_visit = crud.create_visit(db=db, visit=visit)
     return db_visit

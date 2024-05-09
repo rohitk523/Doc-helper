@@ -1,4 +1,4 @@
-from sqlalchemy import Boolean, Column, ForeignKey, Integer, String
+from sqlalchemy import Column, ForeignKey, String
 from sqlalchemy.orm import relationship
 import uuid
 from .database import Base
@@ -7,7 +7,7 @@ from .database import Base
 class User(Base):
     __tablename__ = "users"
 
-    user_id = Column(String, primary_key=True, default=str(uuid.uuid4()))
+    user_id = Column(String, primary_key=True, default=uuid.uuid4)
     name = Column(String, unique=True, index=True)
     hashed_password = Column(String)
 
@@ -17,7 +17,7 @@ class User(Base):
 class Doc(Base):
     __tablename__ = "docs"
 
-    doc_id = Column(String, primary_key=True, default=str(uuid.uuid4()))
+    doc_id = Column(String, primary_key=True, default=uuid.uuid4)
     name = Column(String, index=True)
     speciality = Column(String, index=True)
 
@@ -27,7 +27,7 @@ class Doc(Base):
 class Visit(Base):
     __tablename__ = "visits"
 
-    visit_id = Column(String, primary_key=True, default=str(uuid.uuid4()))
+    visit_id = Column(String, primary_key=True, default=uuid.uuid4)
     user_id = Column(String, ForeignKey("users.user_id"))
     doc_id = Column(String, ForeignKey("docs.doc_id"))
     symptoms = Column(String, index=True)
